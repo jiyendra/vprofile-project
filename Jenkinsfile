@@ -7,7 +7,7 @@ pipeline {
     }
     
     environment {
-         SNAP_REPO = 'vprofile-snapshot'
+        SNAP_REPO = 'vprofile-snapshot'
         NEXUS_USER = 'admin'
         NEXUS_PASS = 'ad@nexus45'
         RELEASE_REPO = 'Vprofile-release'
@@ -70,6 +70,25 @@ pipeline {
                     // true = set pipeline to UNSTABLE, false = don't
                     waitForQualityGate abortPipeline: true
                 }
+            }
+        }
+        stage('artifact upload') {
+            steps {
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: "${NEXUSIP}:${NEXUSPORT}",
+                    groupId: 'QA',
+                    version: "${env_BUILD_ID}-${env_BUILD_TIMESTAMP}",
+                    repository: "${RELEASE_REPO}",
+                    credentialsId: "${NEXUS_LOGIN}",
+                    artifacts: [
+                        [artifactId: MX_APP,
+                        classifier: '',
+                        file: 'target/vvprofile-v2.war',
+                        type: 'war']
+                    ]
+                )
             }
         }
     }
