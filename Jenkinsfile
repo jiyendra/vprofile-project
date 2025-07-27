@@ -83,7 +83,7 @@ pipeline {
                     repository: "${RELEASE_REPO}",
                     credentialsId: "${NEXUS_LOGIN}",
                     artifacts: [
-                        [artifactId: MX_APP,
+                        [artifactId: 'MX_APP',
                         classifier: '',
                         file: 'target/vvprofile-v2.war',
                         type: 'war']
