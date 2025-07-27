@@ -85,7 +85,7 @@ pipeline {
                     artifacts: [
                         [artifactId: 'MX_APP',
                         classifier: '',
-                        file: 'target/vvprofile-v2.war',
+                        file: 'target/vprofile-v2.war',
                         type: 'war']
                     ]
                 )
